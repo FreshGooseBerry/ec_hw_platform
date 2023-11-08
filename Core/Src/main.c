@@ -108,12 +108,30 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
+    HAL_TIM_Base_Start_IT(&htim5);
+    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_3);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+    int i=0;
+    uint8_t alpha, red, blue, green;
   while (1)
   {
+
+    while(i<=65535){
+        LED_Show(0xFF,i,i,i);
+        HAL_Delay(10);
+        ++i;
+    }
+      while(i>=0){
+          LED_Show(0xFF,i,i,i);
+          HAL_Delay(10);
+          --i;
+      }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -168,6 +186,27 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void LED_RGBa_Show(uint32_t aRGB){
+    uint32_t alpha;
+    uint32_t red, blue, green;
+
+    alpha = ((aRGB & 0xFF000000) >> 24) * alpha;
+    red = ((aRGB & 0x00FF0000) >> 16) * alpha;
+    blue = ((aRGB & 0x0000FF00) >> 8) * alpha;
+    green = ((aRGB & 0x000000FF) >> 0) * alpha;
+
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_1,blue);
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_2,green);
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_3,red);
+}
+
+void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
+    //四个参数范围0-255
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_1,blue);
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_2,green);
+    __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_3,red);
+}
 
 /* USER CODE END 4 */
 
