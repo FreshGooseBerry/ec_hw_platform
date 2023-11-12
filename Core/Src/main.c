@@ -123,27 +123,12 @@ int main(void)
   red=99;
   blue=0;
   green=0;
+  LED_Breath(alpha,red,blue,green);
 
   while (1)
   {
-      while(red>0){
-          LED_Show(alpha, red, blue, green);
-          HAL_Delay(1);
-          --red;
-          ++blue;
-      }
-      while(blue>0){
-          LED_Show(alpha, red, blue, green);
-          HAL_Delay(1);
-          --blue;
-          ++green;
-      }
-      while(green>0){
-          LED_Show(alpha, red, blue, green);
-          HAL_Delay(1);
-          --green;
-          ++red;
-      }
+
+
 
     /* USER CODE END WHILE */
 
@@ -199,7 +184,9 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+/**
+ * @brief LED处理函数  LED Control
+ */
 void LED_RGBa_Show(uint32_t aRGB){
     uint32_t alpha;
     uint32_t red, blue, green;
@@ -219,6 +206,28 @@ void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_1,blue);
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_2,green);
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_3,red);
+}
+
+//函数若在主循环中使用，加Dealy会导致其失效
+void LED_Breath(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
+    while(red>0){
+        LED_Show(alpha, red, blue, green);
+        HAL_Delay(1);
+        --red;
+        ++blue;
+    }
+    while(blue>0){
+        LED_Show(alpha, red, blue, green);
+        HAL_Delay(1);
+        --blue;
+        ++green;
+    }
+    while(green>0){
+        LED_Show(alpha, red, blue, green);
+        HAL_Delay(1);
+        --green;
+        ++red;
+    }
 }
 
 

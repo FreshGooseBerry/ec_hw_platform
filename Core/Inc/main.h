@@ -55,6 +55,8 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 void LED_RGBa_Show(uint32_t aRGB);
 void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green);
+void LED_Breath(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
