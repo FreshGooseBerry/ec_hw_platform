@@ -178,7 +178,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
- * @brief LED处理函数（使用PWM）  LED Control using PWM
+ * @brief LED处理函数(使用PWM)  LED Control using PWM
  */
 void LED_RGBa_Show(uint32_t aRGB){
     uint32_t alpha;
