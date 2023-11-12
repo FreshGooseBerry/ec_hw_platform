@@ -50,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t rising_falling_flag;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,6 +113,9 @@ int main(void)
   HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_3);
 
+  //
+  LED_Show(0,0,30);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -120,7 +123,6 @@ int main(void)
 
   while (1)
   {
-
 
 
     /* USER CODE END WHILE */
@@ -194,7 +196,7 @@ void LED_RGBa_Show(uint32_t aRGB){
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_3,red);
 }
 
-void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
+void LED_Show(uint8_t red, uint8_t blue, uint8_t green){
     //四个参数范围0-255
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_1,blue);
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_2,green);
@@ -202,26 +204,34 @@ void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
 }
 
 //函数若在主循环中使用，加Dealy会导致其失效
-void LED_Breath(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
+void LED_Breath(uint8_t red, uint8_t blue, uint8_t green){
     while(red>0){
-        LED_Show(alpha, red, blue, green);
+        LED_Show(red, blue, green);
         HAL_Delay(1);
         --red;
         ++blue;
     }
     while(blue>0){
-        LED_Show(alpha, red, blue, green);
+        LED_Show(red, blue, green);
         HAL_Delay(1);
         --blue;
         ++green;
     }
     while(green>0){
-        LED_Show(alpha, red, blue, green);
+        LED_Show(red, blue, green);
         HAL_Delay(1);
         --green;
         ++red;
     }
 }
+
+/**
+ * @brief functions handle KEY callback
+ */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+    LED_Show(99,99,0);
+}
+//未明白的地方：为什么回调函数结束之后设置的比较寄存器会还原？
 
 
 /* USER CODE END 4 */
@@ -237,6 +247,7 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+      LED_Show(99,99,0);
   }
   /* USER CODE END Error_Handler_Debug */
 }
