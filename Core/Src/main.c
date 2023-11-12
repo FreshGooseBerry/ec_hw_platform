@@ -108,30 +108,43 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
-    HAL_TIM_Base_Start_IT(&htim5);
-    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
-    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
-    HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_3);
+  HAL_TIM_Base_Start_IT(&htim5);
+  HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_3);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    int i=0;
-    uint8_t alpha, red, blue, green;
+
+  uint8_t alpha, red, blue, green;
+  alpha=0xFF;
+  red=99;
+  blue=0;
+  green=0;
+
   while (1)
   {
-
-    while(i<=65535){
-        LED_Show(0xFF,i,i,i);
-        HAL_Delay(10);
-        ++i;
-    }
-      while(i>=0){
-          LED_Show(0xFF,i,i,i);
-          HAL_Delay(10);
-          --i;
+      while(red>0){
+          LED_Show(alpha, red, blue, green);
+          HAL_Delay(1);
+          --red;
+          ++blue;
       }
+      while(blue>0){
+          LED_Show(alpha, red, blue, green);
+          HAL_Delay(1);
+          --blue;
+          ++green;
+      }
+      while(green>0){
+          LED_Show(alpha, red, blue, green);
+          HAL_Delay(1);
+          --green;
+          ++red;
+      }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -207,6 +220,7 @@ void LED_Show(uint8_t alpha, uint8_t red, uint8_t blue, uint8_t green){
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_2,green);
     __HAL_TIM_SET_COMPARE(&htim5,TIM_CHANNEL_3,red);
 }
+
 
 /* USER CODE END 4 */
 
