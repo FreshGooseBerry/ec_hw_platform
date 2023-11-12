@@ -118,13 +118,6 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  uint8_t alpha, red, blue, green;
-  alpha=0xFF;
-  red=99;
-  blue=0;
-  green=0;
-  LED_Breath(alpha,red,blue,green);
-
   while (1)
   {
 
@@ -185,7 +178,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
- * @brief LED处理函数  LED Control
+ * @brief LED处理函数（使用PWM）  LED Control using PWM
  */
 void LED_RGBa_Show(uint32_t aRGB){
     uint32_t alpha;
