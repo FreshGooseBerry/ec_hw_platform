@@ -184,7 +184,7 @@ void LED_RGBa_Show(uint32_t aRGB){
     uint32_t alpha;
     uint32_t red, blue, green;
 
-    alpha = ((aRGB & 0xFF000000) >> 24) * alpha;
+    alpha = ((aRGB & 0xFF000000) >> 24);
     red = ((aRGB & 0x00FF0000) >> 16) * alpha;
     blue = ((aRGB & 0x0000FF00) >> 8) * alpha;
     green = ((aRGB & 0x000000FF) >> 0) * alpha;
