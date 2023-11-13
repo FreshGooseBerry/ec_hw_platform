@@ -115,7 +115,7 @@ int main(void)
 
   HAL_ADC_Start_IT(&hadc3);
 
-  //
+  //初始时自动亮绿灯
   LED_Show(0,0,30);
 
   /* USER CODE END 2 */
