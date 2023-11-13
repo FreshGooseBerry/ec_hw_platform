@@ -50,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t rising_falling_flag;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,6 +113,8 @@ int main(void)
   HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim5,TIM_CHANNEL_3);
 
+  HAL_ADC_Start_IT(&hadc3);
+
   //
   LED_Show(0,0,30);
 
@@ -120,11 +122,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
   while (1)
   {
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
